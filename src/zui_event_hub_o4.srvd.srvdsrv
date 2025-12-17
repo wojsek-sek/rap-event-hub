@@ -1,0 +1,11 @@
+@EndUserText: {
+  label: 'Service Definition for ZC_EVENT_WS'
+}
+@ObjectModel: {
+  leadingEntity: {
+    name: 'ZC_EVENT_WS'
+  }
+}
+define service ZUI_EVENT_HUB_O4 provider contracts odata_v4_ui {
+  expose ZC_EVENT_WS;
+}

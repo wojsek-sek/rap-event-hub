@@ -1,0 +1,6 @@
+@EndUserText.label: 'ZI_EVENT_WS'
+@MappingRole: true
+define role ZI_EVENT_WS {
+  grant select on ZI_EVENT_WS
+  where TRUE;
+}
