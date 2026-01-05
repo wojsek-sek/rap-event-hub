@@ -12,7 +12,17 @@ annotate view ZC_EVENT_WS with
     purpose: #STANDARD, 
     position: 10 , 
     type: #IDENTIFICATION_REFERENCE
-  } ]
+  },
+  /* Sekcja 2: Tabela Rejestracji */
+    {
+      id: 'Registrations',
+      purpose: #STANDARD,
+      type: #LINEITEM_REFERENCE,  // <--- Typ: Tabela z pozycjami
+      label: 'Lista Uczestników',
+      position: 20,
+      targetElement: '_Registrations' // <--- Cel: Nazwa asocjacji z Consumption View
+    }
+  ]
   @UI.identification: [ {
     position: 10 , 
     label: 'EventUUID'
@@ -206,4 +216,5 @@ annotate view ZC_EVENT_WS with
     position: 150 
   } ]
   _BaseEntity;
+  
 }

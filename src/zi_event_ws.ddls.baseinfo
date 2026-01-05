@@ -6,7 +6,9 @@
 "ZAEVENT_WS"
 ],
 "ASSOCIATED":
-[],
+[
+"ZI_REG_WS"
+],
 "BASE":
 [],
 "ANNO_REF":

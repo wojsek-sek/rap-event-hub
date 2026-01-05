@@ -26,11 +26,16 @@ authorization master( global )
   update;
   delete;
 
+  /* Powiązanie z dzieckiem w Behaviorze */
+  association _Registrations { create; with draft; }
+
   draft action Activate optimized;
   draft action Discard;
   draft action Edit;
   draft action Resume;
   draft determine action Prepare;
+
+  validation validateDates on save { field startDate, endDate; create; update; }
 
   mapping for ZAEVENT_WS corresponding extensible
   {
@@ -50,4 +55,36 @@ authorization master( global )
     LastChangedAt = last_changed_at;
   }
 
+}
+
+define behavior for ZI_REG_WS alias Registration
+persistent table zareg_ws
+draft table zareg_ws_d // <--- System poprosi o wygenerowanie tej tabeli (Ctrl+1)
+lock dependent by _Event
+authorization dependent by _Event
+etag master local_last_changed_at
+{
+  update;
+  delete;
+
+  field ( readonly ) regist_uuid, event_uuid;
+
+  field ( numbering : managed )
+   regist_uuid;
+  /* Powiązanie z rodzicem */
+  association _Event { with draft; }
+
+  determination calculateOccupiedSeats on save { create; delete; }
+
+  mapping for zareg_ws
+  {
+    regist_uuid = regist_uuid;
+    event_uuid = event_uuid;
+    first_name = first_name;
+    last_name = last_name;
+    email = email;
+    booking_date = booking_date;
+    ticket_code = ticket_code;
+    local_last_changed_at = local_last_changed_at;
+  }
 }

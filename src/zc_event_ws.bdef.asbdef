@@ -11,10 +11,26 @@ use etag
   use update;
   use delete;
 
+  use association _Registrations { create; with draft; }
+
+  side effects {
+    entity _Registrations affects field OccupiedSeats;
+  }
+
+
   use action Edit;
   use action Activate;
   use action Discard;
   use action Resume;
   use action Prepare;
 
+}
+
+define behavior for ZC_REG_WS alias Registration
+{
+
+  use update;
+  use delete;
+
+  use association _Event { with draft; }
 }

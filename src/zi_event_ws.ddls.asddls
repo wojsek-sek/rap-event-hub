@@ -3,7 +3,8 @@
 @ObjectModel.sapObjectNodeType.name: 'ZEVENT_HUB'
 @EndUserText.label: '###GENERATED Core Data Service Entity'
 define root view entity ZI_EVENT_WS
-  as select from ZAEVENT_WS
+  as select from zaevent_ws 
+  composition [0..*] of ZI_REG_WS as _Registrations
 {
   key event_uuid as EventUUID,
   event_id as EventID,
@@ -23,5 +24,8 @@ define root view entity ZI_EVENT_WS
   @Semantics.systemDateTime.localInstanceLastChangedAt: true
   local_last_changed_at as LocalLastChangedAt,
   @Semantics.systemDateTime.lastChangedAt: true
-  last_changed_at as LastChangedAt
+  last_changed_at as LastChangedAt,
+  
+  /* Expose association (upublicznij relację) */
+  _Registrations
 }

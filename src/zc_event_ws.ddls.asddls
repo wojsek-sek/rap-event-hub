@@ -1,7 +1,7 @@
 @Metadata.allowExtensions: true
 @Metadata.ignorePropagatedAnnotations: true
 @EndUserText: {
-  label: '###GENERATED Core Data Service Entity'
+  label: 'Event Details'
 }
 @ObjectModel: {
   sapObjectNodeType.name: 'ZEVENT_HUB'
@@ -41,5 +41,8 @@ define root view entity ZC_EVENT_WS
     systemDateTime.lastChangedAt: true
   }
   LastChangedAt,
-  _BaseEntity
+  _BaseEntity,
+  
+  /* Przekierowanie relacji do wersji "C_" dziecka */
+  _Registrations : redirected to composition child ZC_REG_WS
 }
