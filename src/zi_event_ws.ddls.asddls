@@ -13,8 +13,8 @@ define root view entity ZI_EVENT_WS
   start_date as StartDate,
   end_date as EndDate,
   status as Status,
-  max_seats as MaxSeats,
-  occupied_seats as OccupiedSeats,
+  cast( max_seats      as abap.int4 ) as MaxSeats,
+  cast( occupied_seats      as abap.int4 ) as OccupiedSeats,
   @Semantics.user.createdBy: true
   local_created_by as LocalCreatedBy,
   @Semantics.systemDateTime.createdAt: true
@@ -26,6 +26,15 @@ define root view entity ZI_EVENT_WS
   @Semantics.systemDateTime.lastChangedAt: true
   last_changed_at as LastChangedAt,
   
+  cast( 
+      case 
+        when occupied_seats = 0 then 0
+        when occupied_seats < max_seats then 3 
+        when occupied_seats >= max_seats then 1
+        else 0
+      end as abap.int1 
+    ) as OccupiedCriticality,
+    
   /* Expose association (upublicznij relację) */
   _Registrations
 }

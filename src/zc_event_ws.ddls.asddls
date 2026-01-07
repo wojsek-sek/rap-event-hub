@@ -43,6 +43,8 @@ define root view entity ZC_EVENT_WS
   LastChangedAt,
   _BaseEntity,
   
+  OccupiedCriticality,
+  
   /* Przekierowanie relacji do wersji "C_" dziecka */
   _Registrations : redirected to composition child ZC_REG_WS
 }

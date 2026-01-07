@@ -16,7 +16,8 @@ authorization master( global )
    LocalCreatedAt,
    LocalLastChangedBy,
    LocalLastChangedAt,
-   LastChangedAt;
+   LastChangedAt,
+   OccupiedCriticality;
 
   field ( numbering : managed )
    EventUUID;
