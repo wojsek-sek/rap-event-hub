@@ -1,7 +1,7 @@
 @Metadata.layer: #CORE
 annotate view ZC_REG_WS with 
 {
-  /* Konfiguracja nagłówka (opcjonalnie) */
+
   @UI.facet: [ { id: 'General', purpose: #STANDARD, type: #IDENTIFICATION_REFERENCE, label: 'Dane Uczestnika', position: 10 } ]
 
   /* Pola */
@@ -9,9 +9,19 @@ annotate view ZC_REG_WS with
   @UI.identification: [ { position: 10, label: 'Imię' } ]
   first_name;
 
-  @UI.lineItem:       [ { position: 20, label: 'Nazwisko' } ]
-  @UI.identification: [ { position: 20, label: 'Nazwisko' } ]
+  @UI.lineItem:       [ { position: 15, label: 'Nazwisko' } ]
+  @UI.identification: [ { position: 15, label: 'Nazwisko' } ]
   last_name;
 
-  /* ... reszta pól ... */
+  @UI.lineItem:       [ { position: 20, label: 'Email' } ]
+  @UI.identification: [ { position: 20, label: 'Email' } ]
+  email;
+  
+  @UI.lineItem:       [ { position: 30, label: 'Booking Date' } ]
+  @UI.identification: [ { position: 30, label: 'Booking Date' } ]
+  booking_date;
+  
+  @UI.lineItem:       [ { position: 40, label: 'Ticket Code' } ]
+  @UI.identification: [ { position: 40, label: 'Ticket Code' } ]
+  ticket_code;
 }

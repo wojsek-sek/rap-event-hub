@@ -21,9 +21,11 @@ CLASS zcl_generate_data_ws IMPLEMENTATION.
     DELETE FROM zareg_ws.
     DELETE FROM zevent_ws_d.
     DELETE FROM zareg_ws_d.
+    DELETE FROM zvenue_ws.
 
     DATA: it_events TYPE TABLE OF zaevent_ws.
     DATA: it_registrations TYPE TABLE OF zareg_ws.
+    DATA: it_venues TYPE TABLE OF zvenue_ws.
 
     TRY.
         DATA(lv_event_uuid) = cl_system_uuid=>create_uuid_x16_static( ).
@@ -78,14 +80,23 @@ CLASS zcl_generate_data_ws IMPLEMENTATION.
           ticket_code   = 'TICKET-002' )
         ).
 
+        it_venues = VALUE #(
+            ( venue_id = cl_system_uuid=>create_uuid_x16_static( ) name = 'Hala Stulecia'      city = 'Wrocław'  street = 'Wystawowa 1' )
+            ( venue_id = cl_system_uuid=>create_uuid_x16_static( ) name = 'Stadion Narodowy'   city = 'Warszawa' street = 'al. Księcia Poniatowskiego 1' )
+            ( venue_id = cl_system_uuid=>create_uuid_x16_static( ) name = 'Spodek'             city = 'Katowice' street = 'al. Korfantego 35' )
+            ( venue_id = cl_system_uuid=>create_uuid_x16_static( ) name = 'MTP Pawilon 5'      city = 'Poznań'   street = 'Głogowska 14' )
+        ).
+
+
       CATCH cx_uuid_error.
         "handle exception
     ENDTRY.
 
     INSERT zaevent_ws FROM TABLE @it_events.
     INSERT zareg_ws FROM TABLE @it_registrations.
+    INSERT zvenue_ws FROM TABLE @it_venues.
 
-    out->write( |Wstawiono { sy-dbcnt } rekordów do tabeli Event!| ).
+    out->write( |Dane wygenerowane!| ).
 
   ENDMETHOD.
 ENDCLASS.

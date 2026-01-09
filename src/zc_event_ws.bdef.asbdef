@@ -24,6 +24,8 @@ use etag
   use action Resume;
   use action Prepare;
 
+  use action cancelEvent;
+
 }
 
 define behavior for ZC_REG_WS alias Registration

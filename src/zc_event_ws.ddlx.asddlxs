@@ -14,20 +14,33 @@ annotate view ZC_EVENT_WS with
     type: #IDENTIFICATION_REFERENCE
   },
   {
-    id: 'StatsBlock',
-    purpose: #STANDARD,
-    type: #DATAPOINT_REFERENCE,   // <--- To nie jest Formularz.
-    targetQualifier: 'ProgressTest', // <--- Odwołanie do Paska
+    id: 'StatsCollection',
+    type: #COLLECTION,       // <--- Typ: Kolekcja
     label: 'Statystyki Obłożenia',
-    position: 15
+    position: 20
   },
-  /* Sekcja 2: Tabela Rejestracji */
+    {
+        parentId: 'StatsCollection',     // <--- Przypisanie do rodzica
+        id: 'StatsBar',
+        type: #DATAPOINT_REFERENCE,      // <--- Typ: Wykres/Pasek
+        targetQualifier: 'ProgressTest', // <--- Odwołanie do paska OccupiedSeats
+        position: 10
+      },
+
+      /* DZIECKO B */
+      {
+        parentId: 'StatsCollection',     // <--- Przypisanie do rodzica
+        id: 'StatsFields',
+        type: #FIELDGROUP_REFERENCE,     // <--- Typ: Grupa pól
+        targetQualifier: 'StatsFields',  // <--- Odwołanie do grupy z Kroku 1
+        position: 20
+      },
     {
       id: 'Registrations',
       purpose: #STANDARD,
       type: #LINEITEM_REFERENCE,  // <--- Typ: Tabela z pozycjami
       label: 'Lista Uczestników',
-      position: 20,
+      position: 30,
       targetElement: '_Registrations' // <--- Cel: Nazwa asocjacji z Consumption View
     }
   ]
@@ -64,7 +77,7 @@ annotate view ZC_EVENT_WS with
   
   @EndUserText.label: 'Location'
   @UI.identification: [ {
-    position: 30 , 
+    position: 50 , 
     label: 'Location'
   } ]
   @UI.lineItem: [ {
@@ -78,7 +91,7 @@ annotate view ZC_EVENT_WS with
   
   @EndUserText.label: 'StartDate'
   @UI.identification: [ {
-    position: 40 , 
+    position: 30 , 
     label: 'StartDate'
   } ]
   @UI.lineItem: [ {
@@ -92,7 +105,7 @@ annotate view ZC_EVENT_WS with
   
   @EndUserText.label: 'EndDate'
   @UI.identification: [ {
-    position: 50 , 
+    position: 40 , 
     label: 'EndDate'
   } ]
   @UI.lineItem: [ {
@@ -105,38 +118,26 @@ annotate view ZC_EVENT_WS with
   EndDate;
   
   @EndUserText.label: 'Status'
-  @UI.identification: [ {
-    position: 60 , 
-    label: 'Status'
-  } ]
+  @UI.fieldGroup: [ { qualifier: 'StatsFields', position: 20, label: 'Status' }  ]
+  @UI.identification: [{ type: #FOR_ACTION, dataAction: 'cancelEvent', label: 'Anuluj Wydarzenie', importance: #HIGH, position: 10 }]
   @UI.lineItem: [ {
     position: 60 , 
     label: 'Status'
-  } ]
+  }, { type: #FOR_ACTION, dataAction: 'cancelEvent', label: 'Anuluj Wydarzenie' } ]
   @UI.selectionField: [ {
     position: 60 
   } ]
   Status;
   
   @EndUserText.label: 'MaxSeats'
-  @UI.identification: [ {
-    position: 70 , 
-    label: 'MaxSeats'
-  } ]
+  @UI.fieldGroup: [ { qualifier: 'StatsFields', position: 10, label: 'Max Seats' } ]
   @UI.lineItem: [ {
-    position: 70 , 
+    position: 80 , 
     label: 'MaxSeats'
-  } ]
-  @UI.selectionField: [ {
-    position: 70 
   } ]
   MaxSeats;
   
   @EndUserText.label: 'OccupiedSeats'
-  @UI.identification: [ {
-    position: 80 , 
-    label: 'OccupiedSeats'
-  } ]
   @UI.dataPoint: {
     qualifier: 'ProgressTest',
     visualization: #PROGRESS,
@@ -146,7 +147,7 @@ annotate view ZC_EVENT_WS with
   }
   @UI.lineItem: [
     { 
-      position: 80, 
+      position: 70, 
       label: 'OccupiedSeats'
     } 
   ]

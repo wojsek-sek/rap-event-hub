@@ -38,6 +38,12 @@ authorization master( global )
 
   validation validateDates on save { field startDate, endDate; create; update; }
 
+  determination initEventValues on modify { create; }
+
+  /* (features : instance) -> Pozwala nam dynamicznie blokować przycisk */
+  /* result [1] $self      -> Akcja zwraca zaktualizowany obiekt do UI */
+  action ( features : instance ) cancelEvent result [1] $self;
+
   mapping for ZAEVENT_WS corresponding extensible
   {
     EventUUID = event_uuid;
@@ -60,7 +66,7 @@ authorization master( global )
 
 define behavior for ZI_REG_WS alias Registration
 persistent table zareg_ws
-draft table zareg_ws_d // <--- System poprosi o wygenerowanie tej tabeli (Ctrl+1)
+draft table zareg_ws_d
 lock dependent by _Event
 authorization dependent by _Event
 etag master local_last_changed_at
@@ -76,6 +82,8 @@ etag master local_last_changed_at
   association _Event { with draft; }
 
   determination calculateOccupiedSeats on save { create; delete; }
+
+  validation validateAvability on save { create; }
 
   mapping for zareg_ws
   {

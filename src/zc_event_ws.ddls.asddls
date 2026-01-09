@@ -15,9 +15,24 @@ define root view entity ZC_EVENT_WS
   key EventUUID,
   EventID,
   Title,
+  @Consumption.valueHelpDefinition: [ { 
+    entity: { 
+        name:    'ZI_VENUE_VH_WS',
+        element: 'VenueName'
+    },
+    
+    additionalBinding: [ { localElement: 'Location', element: 'Street' } ] 
+  } ]
   Location,
   StartDate,
   EndDate,
+  @Consumption.valueHelpDefinition: [ { 
+    entity: { 
+        name:    'ZI_Stauts_VH_WS',
+        element: 'Status'
+    }
+  } ]
+  @UI.textArrangement: #TEXT_ONLY
   Status,
   MaxSeats,
   OccupiedSeats,
