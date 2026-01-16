@@ -3,16 +3,13 @@
  <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
   <asx:values>
    <VSEOCLASS>
-    <CLSNAME>ZBP_I_EVENT_WS</CLSNAME>
+    <CLSNAME>ZCL_EVENT_STATS_QUERY_WS</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>Behavior Definition for ZI_EVENT_WS</DESCRIPT>
-    <CATEGORY>06</CATEGORY>
+    <DESCRIPT>Class for Event Stats Data</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>
     <UNICODE>X</UNICODE>
-    <CLSDEFINT>ZI_EVENT_WS</CLSDEFINT>
-    <WITH_UNIT_TESTS>X</WITH_UNIT_TESTS>
    </VSEOCLASS>
   </asx:values>
  </asx:abap>

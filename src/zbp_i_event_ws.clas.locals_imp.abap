@@ -79,24 +79,22 @@ ENDCLASS.
 CLASS LHC_ZI_EVENT_WS DEFINITION INHERITING FROM CL_ABAP_BEHAVIOR_HANDLER.
   PRIVATE SECTION.
     METHODS:
-      GET_GLOBAL_AUTHORIZATIONS FOR GLOBAL AUTHORIZATION
-        IMPORTING
-           REQUEST requested_authorizations FOR ZiEventWs
-        RESULT result,
+      get_instance_authorizations FOR INSTANCE AUTHORIZATION IMPORTING keys
+      REQUEST requested_authorizations FOR ziEventws RESULT result,
       validateDates FOR VALIDATE ON SAVE
             IMPORTING keys FOR ZiEventWs~validateDates,
       initEventValues FOR DETERMINE ON MODIFY
             IMPORTING keys FOR ZiEventWs~initEventValues,
       get_instance_features FOR INSTANCE FEATURES
-            IMPORTING keys REQUEST requested_features FOR ZiEventWs RESULT result.
+            IMPORTING keys REQUEST requested_features FOR ZiEventWs RESULT result,
+      cancelEvent FOR MODIFY
+            IMPORTING keys FOR ACTION ZiEventWs~cancelEvent RESULT result,
+      get_global_authorizations FOR GLOBAL AUTHORIZATION
+            IMPORTING REQUEST requested_authorizations FOR ZiEventWs RESULT result.
 
-          METHODS cancelEvent FOR MODIFY
-            IMPORTING keys FOR ACTION ZiEventWs~cancelEvent RESULT result.
 ENDCLASS.
 
 CLASS LHC_ZI_EVENT_WS IMPLEMENTATION.
-  METHOD GET_GLOBAL_AUTHORIZATIONS.
-  ENDMETHOD.
 
   METHOD validateDates.
 
@@ -146,7 +144,7 @@ CLASS LHC_ZI_EVENT_WS IMPLEMENTATION.
             MODIFY ENTITIES OF ZI_EVENT_WS IN LOCAL MODE
                 ENTITY ZiEventWs
                 UPDATE
-                FIELDS ( OccupiedSeats MaxSeats )
+                FIELDS ( OccupiedSeats MaxSeats Status )
                 WITH VALUE #(
                     FOR event IN events (
                         %tky = event-%tky
@@ -154,6 +152,7 @@ CLASS LHC_ZI_EVENT_WS IMPLEMENTATION.
                         MaxSeats      = cond #( when event-MaxSeats is initial
                                                then 10
                                                else event-MaxSeats )
+                        Status        = zif_event_status_ws=>status-open
                      )
                     ).
 
@@ -173,7 +172,17 @@ CLASS LHC_ZI_EVENT_WS IMPLEMENTATION.
       result = VALUE #( FOR event IN events (
                  %tky = event-%tky
                  %action-cancelEvent = COND #(
-                    WHEN event-status = 'X'
+                    WHEN event-status = zif_event_status_ws=>status-cancelled
+                    THEN if_abap_behv=>fc-o-disabled
+                    ELSE if_abap_behv=>fc-o-enabled
+                 )
+                 %delete = COND #(
+                    WHEN event-status = zif_event_status_ws=>status-cancelled OR event-status IS INITIAL
+                    THEN if_abap_behv=>fc-o-enabled
+                    ELSE if_abap_behv=>fc-o-disabled
+                 )
+                 %update = COND #(
+                    WHEN event-status = zif_event_status_ws=>status-cancelled
                     THEN if_abap_behv=>fc-o-disabled
                     ELSE if_abap_behv=>fc-o-enabled
                  )
@@ -182,27 +191,73 @@ CLASS LHC_ZI_EVENT_WS IMPLEMENTATION.
 
   METHOD cancelEvent.
 
+    READ ENTITIES OF ZI_EVENT_WS IN LOCAL MODE
+    ENTITY ziEventws
+    ALL FIELDS WITH CORRESPONDING #( keys )
+    RESULT DATA(events).
+
+    result = VALUE #( FOR event IN events (
+                         %tky   = event-%tky
+                         %param = event
+                      ) ).
+
     MODIFY ENTITIES OF ZI_EVENT_WS IN LOCAL MODE
         ENTITY ziEventws
         UPDATE
-        FIELDS ( status )
+        FIELDS ( status cancelreason )
         WITH VALUE #( FOR key IN keys (
                         %tky   = key-%tky
-                        status = 'X'
+                        status = zif_event_status_ws=>status-cancelled
+                        CancelReason = key-%param-reason
                      ) )
         FAILED failed
         REPORTED reported.
 
-      READ ENTITIES OF ZI_EVENT_WS IN LOCAL MODE
-        ENTITY ziEventws
-        ALL FIELDS WITH CORRESPONDING #( keys )
-        RESULT DATA(events).
+    ENDMETHOD.
 
-      " 3. Przekazanie wyniku do frameworka
-      result = VALUE #( FOR event IN events (
-                          %tky   = event-%tky
-                          %param = event
-                       ) ).
+  METHOD GET_INSTANCE_AUTHORIZATIONS.
+    READ ENTITIES OF ZI_EVENT_WS IN LOCAL MODE
+         ENTITY ziEventws
+         FIELDS ( LOCALCreatedBy )
+         WITH CORRESPONDING #( keys )
+         RESULT DATA(events).
+
+    LOOP AT events INTO DATA(event).
+        DATA(lv_update_auth) = if_abap_behv=>auth-unauthorized.
+        DATA(lv_delete_auth) = if_abap_behv=>auth-unauthorized.
+
+        IF event-LocalCreatedBy IS INITIAL OR event-LocalCreatedBy = sy-uname.
+            lv_update_auth = if_abap_behv=>auth-allowed.
+            lv_delete_auth = if_abap_behv=>auth-allowed.
+        ENDIF.
+
+        APPEND VALUE #(
+               %tky = event-%tky
+               %update = COND #( WHEN requested_authorizations-%update = if_abap_behv=>mk-on
+                            THEN lv_update_auth
+                            ELSE if_abap_behv=>auth-allowed )
+               %delete = COND #( WHEN requested_authorizations-%update = if_abap_behv=>mk-on
+                            THEN lv_update_auth
+                            ELSE if_abap_behv=>auth-allowed )
+         ) TO result.
+    ENDLOOP.
+  ENDMETHOD.
+
+  METHOD get_global_authorizations.
+
+    DATA(lv_create_auth) = if_abap_behv=>auth-allowed.
+
+    "if pfcg_auth(...) = false -> lv_create_auth = unauthorized.
+
+    IF requested_authorizations-%create = if_abap_behv=>mk-on.
+
+      IF lv_create_auth = if_abap_behv=>auth-allowed.
+        result-%create = if_abap_behv=>auth-allowed.
+      ELSE.
+        result-%create = if_abap_behv=>auth-unauthorized.
+      ENDIF.
+
+    ENDIF.
   ENDMETHOD.
 
 ENDCLASS.

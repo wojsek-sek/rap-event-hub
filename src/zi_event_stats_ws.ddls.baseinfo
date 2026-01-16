@@ -2,14 +2,9 @@
 "BASEINFO":
 {
 "FROM":
-[
-"ZI_STATUS_TEXT_WS",
-"ZSTATUS_WS"
-],
+[],
 "ASSOCIATED":
-[
-"ZI_STATUS_TEXT_WS"
-],
+[],
 "BASE":
 [],
 "ANNO_REF":

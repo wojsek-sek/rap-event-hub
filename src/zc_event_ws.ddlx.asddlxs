@@ -3,6 +3,7 @@
 @UI.headerInfo.title.value: 'EventUUID'
 @UI.headerInfo.description.type: #STANDARD
 @UI.headerInfo.description.value: 'EventUUID'
+@Search.searchable: true
 annotate view ZC_EVENT_WS with
 {
   @EndUserText.label: 'EventUUID'
@@ -59,6 +60,7 @@ annotate view ZC_EVENT_WS with
   @UI.selectionField: [ {
     position: 10 
   } ]
+  @Search.defaultSearchElement: true
   EventID;
   
   @EndUserText.label: 'Nazwa konferencji'
@@ -73,6 +75,8 @@ annotate view ZC_EVENT_WS with
   @UI.selectionField: [ {
     position: 20 
   } ]
+  @Search.defaultSearchElement: true
+  @Search.fuzzinessThreshold: 0.7
   Title;
   
   @EndUserText.label: 'Location'
@@ -89,47 +93,58 @@ annotate view ZC_EVENT_WS with
   } ]
   Location;
   
-  @EndUserText.label: 'StartDate'
+  @EndUserText.label: 'Start Date'
   @UI.identification: [ {
     position: 30 , 
-    label: 'StartDate'
+    label: 'Start Date'
   } ]
   @UI.lineItem: [ {
     position: 40 , 
-    label: 'StartDate'
+    label: 'Start Date'
   } ]
   @UI.selectionField: [ {
     position: 40 
   } ]
   StartDate;
   
-  @EndUserText.label: 'EndDate'
+  @EndUserText.label: 'End Date'
   @UI.identification: [ {
     position: 40 , 
-    label: 'EndDate'
+    label: 'End Date'
   } ]
   @UI.lineItem: [ {
     position: 50 , 
-    label: 'EndDate'
+    label: 'End Date'
   } ]
   @UI.selectionField: [ {
     position: 50 
   } ]
   EndDate;
   
+  @EndUserText.label: 'Days to Start'
+  @UI.identification: [ {
+    position: 50 , 
+    label: 'Days to Start',
+    criticality: 'StartTimeCriticality',
+    criticalityRepresentation: #WITHOUT_ICON
+  } ]
+  DaysToStart;
+  
   @EndUserText.label: 'Status'
-  @UI.fieldGroup: [ { qualifier: 'StatsFields', position: 20, label: 'Status' }  ]
+  @UI.fieldGroup: [ { qualifier: 'StatsFields', position: 20, label: 'Status', criticality: 'StatusCriticality', criticalityRepresentation: #ONLY_ICON }  ]
   @UI.identification: [{ type: #FOR_ACTION, dataAction: 'cancelEvent', label: 'Anuluj Wydarzenie', importance: #HIGH, position: 10 }]
   @UI.lineItem: [ {
     position: 60 , 
-    label: 'Status'
+    label: 'Status',
+    criticality: 'StatusCriticality',
+    criticalityRepresentation: #ONLY_ICON
   }, { type: #FOR_ACTION, dataAction: 'cancelEvent', label: 'Anuluj Wydarzenie' } ]
   @UI.selectionField: [ {
     position: 60 
   } ]
   Status;
   
-  @EndUserText.label: 'MaxSeats'
+  @EndUserText.label: 'Max Seats'
   @UI.fieldGroup: [ { qualifier: 'StatsFields', position: 10, label: 'Max Seats' } ]
   @UI.lineItem: [ {
     position: 80 , 
@@ -137,7 +152,7 @@ annotate view ZC_EVENT_WS with
   } ]
   MaxSeats;
   
-  @EndUserText.label: 'OccupiedSeats'
+  @EndUserText.label: 'Occupied Seats'
   @UI.dataPoint: {
     qualifier: 'ProgressTest',
     visualization: #PROGRESS,
@@ -148,7 +163,7 @@ annotate view ZC_EVENT_WS with
   @UI.lineItem: [
     { 
       position: 70, 
-      label: 'OccupiedSeats'
+      label: 'Occupied Seats'
     } 
   ]
   OccupiedSeats;

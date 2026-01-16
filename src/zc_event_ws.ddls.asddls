@@ -6,7 +6,7 @@
 @ObjectModel: {
   sapObjectNodeType.name: 'ZEVENT_HUB'
 }
-@AccessControl.authorizationCheck: #MANDATORY
+@AccessControl.authorizationCheck: #CHECK
 define root view entity ZC_EVENT_WS
   provider contract transactional_query
   as projection on ZI_EVENT_WS
@@ -30,7 +30,7 @@ define root view entity ZC_EVENT_WS
     entity: { 
         name:    'ZI_Stauts_VH_WS',
         element: 'Status'
-    }
+    }, distinctValues: true
   } ]
   @UI.textArrangement: #TEXT_ONLY
   Status,
@@ -58,7 +58,14 @@ define root view entity ZC_EVENT_WS
   LastChangedAt,
   _BaseEntity,
   
+  @UI.hidden: true
   OccupiedCriticality,
+  @UI.hidden: true
+  StatusCriticality,
+  DaysToStart,
+  @UI.hidden: true
+  StartTimeCriticality,
+  
   
   /* Przekierowanie relacji do wersji "C_" dziecka */
   _Registrations : redirected to composition child ZC_REG_WS

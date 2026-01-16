@@ -2,5 +2,7 @@
 @MappingRole: true
 define role ZI_EVENT_WS {
   grant select on ZI_EVENT_WS
-  where TRUE;
+  where ( ) = aspect pfcg_auth( S_TABU_NAM, ACTVT = '03', TABLE = 'ZI_EVENT_WS' )
+            OR
+            true;
 }

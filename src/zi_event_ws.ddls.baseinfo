@@ -3,11 +3,13 @@
 {
 "FROM":
 [
+"ZI_TFRAME_TXT_WS",
 "ZAEVENT_WS"
 ],
 "ASSOCIATED":
 [
-"ZI_REG_WS"
+"ZI_REG_WS",
+"ZI_STAUTS_VH_WS"
 ],
 "BASE":
 [],

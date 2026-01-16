@@ -8,7 +8,7 @@ extensible
 draft table ZEVENT_WS_D
 etag master LocalLastChangedAt
 lock master total etag LastChangedAt
-authorization master( global )
+authorization master( global, instance )
 {
   field ( readonly )
    EventUUID,
@@ -17,15 +17,17 @@ authorization master( global )
    LocalLastChangedBy,
    LocalLastChangedAt,
    LastChangedAt,
-   OccupiedCriticality;
+   OccupiedSeats,
+   OccupiedCriticality,
+   StatusCriticality,
+   DaysToStart,
+   StartTimeCriticality;
 
-  field ( numbering : managed )
-   EventUUID;
-
+   field ( numbering : managed ) EventUuid;
 
   create;
-  update;
-  delete;
+  update ( features : instance );
+  delete ( features : instance );
 
   /* Powiązanie z dzieckiem w Behaviorze */
   association _Registrations { create; with draft; }
@@ -42,7 +44,7 @@ authorization master( global )
 
   /* (features : instance) -> Pozwala nam dynamicznie blokować przycisk */
   /* result [1] $self      -> Akcja zwraca zaktualizowany obiekt do UI */
-  action ( features : instance ) cancelEvent result [1] $self;
+  action ( features : instance ) cancelEvent parameter ZI_EVENTCANCEL_POPUP_WS result [1] $self;
 
   mapping for ZAEVENT_WS corresponding extensible
   {
@@ -60,6 +62,7 @@ authorization master( global )
     LocalLastChangedBy = local_last_changed_by;
     LocalLastChangedAt = local_last_changed_at;
     LastChangedAt = last_changed_at;
+    CANCELREASON = cancel_reason;
   }
 
 }
