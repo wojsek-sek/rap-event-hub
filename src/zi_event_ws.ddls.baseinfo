@@ -3,7 +3,6 @@
 {
 "FROM":
 [
-"ZI_TFRAME_TXT_WS",
 "ZAEVENT_WS"
 ],
 "ASSOCIATED":

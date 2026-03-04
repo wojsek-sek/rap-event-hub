@@ -12,7 +12,7 @@ ENDCLASS.
 
 
 
-CLASS zcl_fill_timeframe_data IMPLEMENTATION.
+CLASS ZCL_FILL_TIMEFRAME_DATA IMPLEMENTATION.
 
 
   METHOD if_oo_adt_classrun~main.

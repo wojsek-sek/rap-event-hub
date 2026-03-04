@@ -6,6 +6,8 @@ CLASS lhc_registration DEFINITION INHERITING FROM cl_abap_behavior_handler.
       IMPORTING keys FOR Registration~calculateOccupiedSeats.
     METHODS validateAvability FOR VALIDATE ON SAVE
       IMPORTING keys FOR Registration~validateAvability.
+    METHODS get_instance_features FOR INSTANCE FEATURES
+      IMPORTING keys REQUEST requested_features FOR Registration RESULT result.
 
 ENDCLASS.
 
@@ -74,6 +76,33 @@ CLASS lhc_registration IMPLEMENTATION.
 
   ENDMETHOD.
 
+  METHOD get_instance_features.
+    READ ENTITIES OF ZI_EVENT_WS IN LOCAL MODE
+    ENTITY Registration BY \_Event
+    FIELDS ( status )
+    WITH CORRESPONDING #( keys )
+    RESULT DATA(events)
+    LINK DATA(reg_links).
+
+    LOOP AT reg_links INTO DATA(ls_child_key).
+        DATA(lv_edit) = if_abap_behv=>fc-o-enabled.
+
+        READ TABLE events INTO DATA(ls_event) WITH KEY %tky = ls_child_key-target-%tky.
+
+        IF sy-subrc = 0 AND ls_event-Status = zif_event_status_ws=>status-cancelled.
+            lv_edit = if_abap_behv=>fc-o-disabled.
+        ENDIF.
+
+        INSERT VALUE #(
+            %tky = ls_child_key-source-%tky
+            %update = lv_edit
+            %delete = lv_edit
+        ) INTO TABLE result.
+
+    ENDLOOP.
+
+  ENDMETHOD.
+
 ENDCLASS.
 
 CLASS LHC_ZI_EVENT_WS DEFINITION INHERITING FROM CL_ABAP_BEHAVIOR_HANDLER.
@@ -130,11 +159,15 @@ CLASS LHC_ZI_EVENT_WS IMPLEMENTATION.
 
         READ ENTITIES OF ZI_EVENT_WS IN LOCAL MODE
             ENTITY ZiEventWS
-            FIELDS ( OccupiedSeats MaxSeats )
+            FIELDS ( EventID OccupiedSeats MaxSeats )
             WITH CORRESPONDING #( keys )
             RESULT DATA(events).
 
          IF events IS NOT INITIAL.
+
+            DATA lt_update TYPE TABLE FOR UPDATE ZI_EVENT_WS.
+            DATA: lv_max_event_id TYPE zaevent_ws-event_id,
+                  lv_next_id TYPE i.
 
             READ ENTITIES OF ZI_EVENT_WS IN LOCAL MODE
                 ENTITY ZiEventWs BY \_Registrations
@@ -156,6 +189,40 @@ CLASS LHC_ZI_EVENT_WS IMPLEMENTATION.
                      )
                     ).
 
+            LOOP AT events INTO DATA(ls_event) WHERE EventID IS INITIAL.
+
+             " Clean the retrieved MAX ID to keep only digits using Regex
+             " This prevents dumps when encountering dirty data like 'evt-01'
+              REPLACE ALL OCCURRENCES OF PCRE '[^0-9]' IN lv_max_event_id WITH ''.
+
+              " Safely convert to integer and increment
+              IF lv_max_event_id IS INITIAL.
+                lv_next_id = 1.
+              ELSE.
+                lv_next_id = lv_max_event_id + 1.
+              ENDIF.
+
+              " Format the new ID with a standard prefix using String Templates
+              " Example output: EVT-000002
+              DATA(lv_formatted_id) = |EVT-{ lv_next_id WIDTH = 6 ALIGN = RIGHT PAD = '0' }|.
+
+              " Add the formatted ID to the update table
+              APPEND VALUE #( %tky    = ls_event-%tky
+                              EventID = lv_formatted_id )
+                     TO lt_update.
+            ENDLOOP.
+
+            " 3. Update the entities with the new EventID via EML (Entity Manipulation Language)
+            IF lt_update IS NOT INITIAL.
+              MODIFY ENTITIES OF ZI_EVENT_WS IN LOCAL MODE
+                     ENTITY ZiEventWs
+                     UPDATE FIELDS ( EventID ) WITH lt_update
+                     REPORTED DATA(ls_reported).
+
+              LOOP AT ls_reported-zieventws INTO DATA(ls_msg).
+                APPEND CORRESPONDING #( ls_msg ) TO reported-zieventws.
+              ENDLOOP.
+            ENDIF.
          ENDIF.
 
   ENDMETHOD.
@@ -186,7 +253,13 @@ CLASS LHC_ZI_EVENT_WS IMPLEMENTATION.
                     THEN if_abap_behv=>fc-o-disabled
                     ELSE if_abap_behv=>fc-o-enabled
                  )
+                 %assoc-_Registrations = COND #(
+                    WHEN event-status = zif_event_status_ws=>status-cancelled
+                    THEN if_abap_behv=>fc-o-disabled
+                    ELSE if_abap_behv=>fc-o-enabled
+                 )
                ) ).
+
   ENDMETHOD.
 
   METHOD cancelEvent.
@@ -259,5 +332,6 @@ CLASS LHC_ZI_EVENT_WS IMPLEMENTATION.
 
     ENDIF.
   ENDMETHOD.
+
 
 ENDCLASS.

@@ -12,7 +12,7 @@ ENDCLASS.
 
 
 
-CLASS zcl_setup_num_range_ws IMPLEMENTATION.
+CLASS ZCL_SETUP_NUM_RANGE_WS IMPLEMENTATION.
 
 
   METHOD if_oo_adt_classrun~main.

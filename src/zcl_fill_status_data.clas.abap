@@ -9,7 +9,10 @@ CLASS zcl_fill_status_data DEFINITION
   PRIVATE SECTION.
 ENDCLASS.
 
-CLASS zcl_fill_status_data IMPLEMENTATION.
+
+
+CLASS ZCL_FILL_STATUS_DATA IMPLEMENTATION.
+
 
   METHOD if_oo_adt_classrun~main.
 

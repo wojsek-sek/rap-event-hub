@@ -12,7 +12,7 @@ ENDCLASS.
 
 
 
-CLASS zcl_generate_data_ws IMPLEMENTATION.
+CLASS ZCL_GENERATE_DATA_WS IMPLEMENTATION.
 
 
   METHOD if_oo_adt_classrun~main.

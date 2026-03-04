@@ -12,7 +12,7 @@ ENDCLASS.
 
 
 
-CLASS zcl_event_stats_query_ws IMPLEMENTATION.
+CLASS ZCL_EVENT_STATS_QUERY_WS IMPLEMENTATION.
 
 
   METHOD if_rap_query_provider~select.

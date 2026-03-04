@@ -14,6 +14,12 @@ define root view entity ZC_EVENT_WS
 {
   key EventUUID,
   EventID,
+  @Consumption.valueHelpDefinition: [ { 
+    entity: { 
+        name:    '/DMO/I_Customer_StdVH',
+        element: 'FirstName'
+    }
+  } ]
   Title,
   @Consumption.valueHelpDefinition: [ { 
     entity: { 

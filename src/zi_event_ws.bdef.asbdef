@@ -23,20 +23,31 @@ authorization master( global, instance )
    DaysToStart,
    StartTimeCriticality;
 
-   field ( numbering : managed ) EventUuid;
+  field ( numbering : managed ) EventUuid;
+
+  field ( mandatory )
+  EventID,
+  Title,
+  StartDate,
+  EndDate,
+  Location,
+  Status;
 
   create;
   update ( features : instance );
   delete ( features : instance );
 
   /* Powiązanie z dzieckiem w Behaviorze */
-  association _Registrations { create; with draft; }
+  association _Registrations { create ( features : instance ) ; with draft; }
 
   draft action Activate optimized;
   draft action Discard;
-  draft action Edit;
+  draft action ( features : instance ) Edit;
   draft action Resume;
-  draft determine action Prepare;
+  draft determine action Prepare
+  {
+    validation validateDates;
+  }
 
   validation validateDates on save { field startDate, endDate; create; update; }
 
@@ -44,7 +55,9 @@ authorization master( global, instance )
 
   /* (features : instance) -> Pozwala nam dynamicznie blokować przycisk */
   /* result [1] $self      -> Akcja zwraca zaktualizowany obiekt do UI */
+
   action ( features : instance ) cancelEvent parameter ZI_EVENTCANCEL_POPUP_WS result [1] $self;
+
 
   mapping for ZAEVENT_WS corresponding extensible
   {
@@ -74,8 +87,8 @@ lock dependent by _Event
 authorization dependent by _Event
 etag master local_last_changed_at
 {
-  update;
-  delete;
+  update (features : instance);
+  delete (features : instance);
 
   field ( readonly ) regist_uuid, event_uuid;
 
