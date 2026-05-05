@@ -1,4 +1,4 @@
-CLASS zcl_fill_timeframe_data DEFINITION
+CLASS zwscl_fill_timeframe_data DEFINITION
   PUBLIC
   FINAL
   CREATE PUBLIC .
@@ -12,15 +12,15 @@ ENDCLASS.
 
 
 
-CLASS ZCL_FILL_TIMEFRAME_DATA IMPLEMENTATION.
+CLASS ZWSCL_FILL_TIMEFRAME_DATA IMPLEMENTATION.
 
 
   METHOD if_oo_adt_classrun~main.
 
-    DELETE FROM ZTFRAME_WS.
-    DELETE FROM ZTFRAME_WS_TXT.
+    DELETE FROM ZWSTFRAME_WS.
+    DELETE FROM ZWSTFRAME_WS_TXT.
 
-    DATA: lt_tframe TYPE TABLE OF ZTFRAME_WS.
+    DATA: lt_tframe TYPE TABLE OF ZWSTFRAME_WS.
 
     lt_tframe = VALUE #(
     ( time = 'PAST' )
@@ -29,9 +29,9 @@ CLASS ZCL_FILL_TIMEFRAME_DATA IMPLEMENTATION.
     ( time = 'SFX' )
      ).
 
-     INSERT ztframe_ws FROM TABLE @lt_tframe.
+     INSERT zwstframe_ws FROM TABLE @lt_tframe.
 
-     DATA lt_tframe_txt TYPE TABLE OF ZTFRAME_WS_TXT.
+     DATA lt_tframe_txt TYPE TABLE OF ZWSTFRAME_WS_TXT.
 
      lt_tframe_txt = VALUE #(
      ( time_code = 'PAST'  language = 'L' text = 'Zakończony' )
@@ -44,7 +44,7 @@ CLASS ZCL_FILL_TIMEFRAME_DATA IMPLEMENTATION.
      ( time_code = 'SFX'   language = 'E' text = ' days' )
      ).
 
-     INSERT ztframe_ws_txt FROM TABLE @lt_tframe_txt.
+     INSERT zwstframe_ws_txt FROM TABLE @lt_tframe_txt.
 
      out->write( 'Dane wygenerowane' ).
 

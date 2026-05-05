@@ -1,5 +1,5 @@
 @Metadata.layer: #CORE
-annotate view ZC_REG_WS with 
+annotate view ZWSC_REG_WS with 
 {
 
   @UI.facet: [ { id: 'General', purpose: #STANDARD, type: #IDENTIFICATION_REFERENCE, label: 'Dane Uczestnika', position: 10 } ]

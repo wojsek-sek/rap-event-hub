@@ -1,4 +1,4 @@
-INTERFACE zif_event_status_ws
+INTERFACE zwsif_event_status_ws
   PUBLIC .
 
   CONSTANTS:

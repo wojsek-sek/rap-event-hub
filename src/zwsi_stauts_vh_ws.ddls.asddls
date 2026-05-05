@@ -2,10 +2,10 @@
 @EndUserText.label: 'Value Help for Status'
 @ObjectModel.resultSet.sizeCategory: #XS
 
-define view entity ZI_STAUTS_VH_WS
-  as select from zstatus_ws
+define view entity ZWSI_STAUTS_VH_WS
+  as select from zwsstatus_ws
   
-  association [0..1] to ZI_STATUS_TEXT_WS as _Text 
+  association [0..1] to ZWSI_STATUS_TEXT_WS as _Text 
     on $projection.Status = _Text.StatusId
     and _Text.Language    = $session.system_language
 {

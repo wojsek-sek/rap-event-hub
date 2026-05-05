@@ -4,7 +4,7 @@
   <asx:values>
    <SRVB>
     <METADATA>
-     <NAME>ZAPI_EVENT_HUB_WS</NAME>
+     <NAME>ZWSAPI_EVENT_HUB_WS</NAME>
      <TYPE>SRVB/SVB</TYPE>
      <DESCRIPTION>Event Hub Api Service</DESCRIPTION>
      <LANGUAGE>EN</LANGUAGE>
@@ -13,22 +13,22 @@
     </METADATA>
     <CONTENT>
      <BIND_TYPE_IMPL>
-      <NAME>ZAPI_EVENT_HUB_WS</NAME>
+      <NAME>ZWSAPI_EVENT_HUB_WS</NAME>
      </BIND_TYPE_IMPL>
      <BIND_TYPE>ODATA</BIND_TYPE>
      <BIND_TYPE_CATEGORY>1</BIND_TYPE_CATEGORY>
      <BIND_TYPE_VERSION>V4</BIND_TYPE_VERSION>
      <SERVICES>
       <item>
-       <SERVICE_NAME>ZAPI_EVENT_HUB_WS</SERVICE_NAME>
+       <SERVICE_NAME>ZWSAPI_EVENT_HUB_WS</SERVICE_NAME>
        <SERVICE_CONTENT>
         <item>
          <SERVICE_VERSION>0001</SERVICE_VERSION>
          <RELEASE_STATE>NOT_RELEASED</RELEASE_STATE>
          <SRVD_REF>
-          <URI>/sap/bc/adt/ddic/srvd/sources/zapi_event_hub_ws</URI>
+          <URI>/sap/bc/adt/ddic/srvd/sources/zwsapi_event_hub_ws</URI>
           <TYPE>SRVD/SRV</TYPE>
-          <NAME>ZAPI_EVENT_HUB_WS</NAME>
+          <NAME>ZWSAPI_EVENT_HUB_WS</NAME>
          </SRVD_REF>
          <BIND_TYPE_DATA>
           <CONTENT>

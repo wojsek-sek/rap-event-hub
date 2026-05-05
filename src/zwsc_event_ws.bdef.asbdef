@@ -1,9 +1,9 @@
-projection implementation in class ZBP_C_EVENT_WS unique;
+projection implementation in class ZWSBP_C_EVENT_WS unique;
 strict ( 2 );
 extensible;
 use draft;
 use side effects;
-define behavior for ZC_EVENT_WS alias ZcEventWs
+define behavior for ZWSC_EVENT_WS alias ZcEventWs
 extensible
 use etag
 {
@@ -30,7 +30,7 @@ use etag
 
 }
 
-define behavior for ZC_REG_WS alias Registration
+define behavior for ZWSC_REG_WS alias Registration
 {
 
   use update;

@@ -3,12 +3,12 @@
  <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
   <asx:values>
    <SRVD>
-    <NAME>ZAPI_EVENT_HUB_WS</NAME>
+    <NAME>ZWSAPI_EVENT_HUB_WS</NAME>
     <TYPE>SRVD/SRV</TYPE>
     <DESCRIPTION>Api for Event Hub</DESCRIPTION>
     <LANGUAGE>EN</LANGUAGE>
     <MASTER_LANGUAGE>EN</MASTER_LANGUAGE>
-    <SOURCE_URI>./zapi_event_hub_ws/source/main</SOURCE_URI>
+    <SOURCE_URI>./zwsapi_event_hub_ws/source/main</SOURCE_URI>
     <SOURCE_TYPE>ABAP_SOURCE</SOURCE_TYPE>
     <SOURCE_ORIGIN_DESCRIPTION>ABAP Development Tools</SOURCE_ORIGIN_DESCRIPTION>
     <SRVD_SOURCE_TYPE>S</SRVD_SOURCE_TYPE>

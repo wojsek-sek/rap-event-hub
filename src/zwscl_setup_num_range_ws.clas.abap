@@ -1,4 +1,4 @@
-CLASS zcl_setup_num_range_ws DEFINITION
+CLASS zwscl_setup_num_range_ws DEFINITION
   PUBLIC
   FINAL
   CREATE PUBLIC .
@@ -12,12 +12,12 @@ ENDCLASS.
 
 
 
-CLASS ZCL_SETUP_NUM_RANGE_WS IMPLEMENTATION.
+CLASS ZWSCL_SETUP_NUM_RANGE_WS IMPLEMENTATION.
 
 
   METHOD if_oo_adt_classrun~main.
 
-    DATA: lv_object TYPE c LENGTH 10 VALUE 'ZNR_EID_WS'.
+    DATA: lv_object TYPE c LENGTH 10 VALUE 'ZWSNR_EID_WS'.
 
     TRY.
 

@@ -3,7 +3,7 @@
  <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
   <asx:values>
    <DDLS>
-    <DDLNAME>ZC_REG_WS</DDLNAME>
+    <DDLNAME>ZWSC_REG_WS</DDLNAME>
     <DDLANGUAGE>E</DDLANGUAGE>
     <DDTEXT>Projection View of Registration</DDTEXT>
     <SOURCE_TYPE>P</SOURCE_TYPE>

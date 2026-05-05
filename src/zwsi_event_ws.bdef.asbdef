@@ -1,11 +1,11 @@
-managed implementation in class ZBP_I_EVENT_WS unique;
+managed implementation in class ZWSBP_I_EVENT_WS unique;
 strict ( 2 );
 with draft;
 extensible;
-define behavior for ZI_EVENT_WS alias ZiEventWs
-persistent table ZAEVENT_WS
+define behavior for ZWSI_EVENT_WS alias ZiEventWs
+persistent table ZWSAEVENT_WS
 extensible
-draft table ZEVENT_WS_D
+draft table ZWSEVENT_WS_D
 etag master LocalLastChangedAt
 lock master total etag LastChangedAt
 authorization master( global, instance )
@@ -56,10 +56,10 @@ authorization master( global, instance )
   /* (features : instance) -> Pozwala nam dynamicznie blokować przycisk */
   /* result [1] $self      -> Akcja zwraca zaktualizowany obiekt do UI */
 
-  action ( features : instance ) cancelEvent parameter ZI_EVENTCANCEL_POPUP_WS result [1] $self;
+  action ( features : instance ) cancelEvent parameter ZWSI_EVENTCANCEL_POPUP_WS result [1] $self;
 
 
-  mapping for ZAEVENT_WS corresponding extensible
+  mapping for ZWSAEVENT_WS corresponding extensible
   {
     EventUUID = event_uuid;
     EventID = event_id;
@@ -80,9 +80,9 @@ authorization master( global, instance )
 
 }
 
-define behavior for ZI_REG_WS alias Registration
-persistent table zareg_ws
-draft table zareg_ws_d
+define behavior for ZWSI_REG_WS alias Registration
+persistent table zwsareg_ws
+draft table zwsareg_ws_d
 lock dependent by _Event
 authorization dependent by _Event
 etag master local_last_changed_at
@@ -101,7 +101,7 @@ etag master local_last_changed_at
 
   validation validateAvability on save { create; }
 
-  mapping for zareg_ws
+  mapping for zwsareg_ws
   {
     regist_uuid = regist_uuid;
     event_uuid = event_uuid;

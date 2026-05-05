@@ -3,7 +3,7 @@
  <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
   <asx:values>
    <DDLS>
-    <DDLNAME>ZI_TFRAME_TXT_WS</DDLNAME>
+    <DDLNAME>ZWSI_TFRAME_TXT_WS</DDLNAME>
     <DDLANGUAGE>E</DDLANGUAGE>
     <DDTEXT>Data definition for time frame texts</DDTEXT>
     <SOURCE_TYPE>W</SOURCE_TYPE>

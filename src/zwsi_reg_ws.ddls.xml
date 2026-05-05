@@ -3,7 +3,7 @@
  <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
   <asx:values>
    <DDLS>
-    <DDLNAME>ZI_REG_WS</DDLNAME>
+    <DDLNAME>ZWSI_REG_WS</DDLNAME>
     <DDLANGUAGE>E</DDLANGUAGE>
     <DDTEXT>View Entity for Registration</DDTEXT>
     <SOURCE_TYPE>W</SOURCE_TYPE>

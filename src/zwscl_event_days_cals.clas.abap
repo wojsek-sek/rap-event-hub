@@ -1,4 +1,4 @@
-CLASS zcl_event_days_cals DEFINITION
+CLASS zwscl_event_days_cals DEFINITION
   PUBLIC
   FINAL
   CREATE PUBLIC .
@@ -11,7 +11,7 @@ ENDCLASS.
 
 
 
-CLASS zcl_event_days_cals IMPLEMENTATION.
+CLASS zwscl_event_days_cals IMPLEMENTATION.
 
 
   METHOD if_sadl_exit_calc_element_read~calculate.
@@ -22,7 +22,7 @@ CLASS zcl_event_days_cals IMPLEMENTATION.
 
     " 2. Przygotowanie danych wejściowych
     " Tutaj pobieramy to, co zwrócił CDS (czyli surowe dane z bazy)
-    DATA: lt_original_data TYPE STANDARD TABLE OF ZI_EVENT_WS WITH DEFAULT KEY.
+    DATA: lt_original_data TYPE STANDARD TABLE OF ZWSI_EVENT_WS WITH DEFAULT KEY.
     lt_original_data = CORRESPONDING #( it_original_data ).
 
     " 3. Pobranie daty systemowej w sposób bezpieczny dla chmury

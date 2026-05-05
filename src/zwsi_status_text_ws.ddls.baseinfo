@@ -3,7 +3,7 @@
 {
 "FROM":
 [
-"ZSTATUS_TXT_WS"
+"ZWSSTATUS_TXT_WS"
 ],
 "ASSOCIATED":
 [],

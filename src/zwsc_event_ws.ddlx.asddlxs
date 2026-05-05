@@ -4,7 +4,7 @@
 @UI.headerInfo.description.type: #STANDARD
 @UI.headerInfo.description.value: 'EventUUID'
 @Search.searchable: true
-annotate view ZC_EVENT_WS with
+annotate view ZWSC_EVENT_WS with
 {
   @EndUserText.label: 'EventUUID'
   @UI.facet: [ {

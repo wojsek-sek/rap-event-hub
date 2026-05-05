@@ -1,4 +1,4 @@
-CLASS zcl_event_stats_query_ws DEFINITION
+CLASS zwscl_event_stats_query_ws DEFINITION
   PUBLIC
   FINAL
   CREATE PUBLIC .
@@ -12,16 +12,16 @@ ENDCLASS.
 
 
 
-CLASS ZCL_EVENT_STATS_QUERY_WS IMPLEMENTATION.
+CLASS ZWSCL_EVENT_STATS_QUERY_WS IMPLEMENTATION.
 
 
   METHOD if_rap_query_provider~select.
 
     IF io_request->is_data_requested( ).
 
-      DATA: lt_results TYPE TABLE OF ZI_EVENT_STATS_WS.
+      DATA: lt_results TYPE TABLE OF ZWSI_EVENT_STATS_WS.
 
-      SELECT FROM zaevent_ws
+      SELECT FROM zwsaevent_ws
         FIELDS status, COUNT( * ) AS eventcount
         GROUP BY status
         INTO CORRESPONDING FIELDS OF TABLE @lt_results.
@@ -35,7 +35,7 @@ CLASS ZCL_EVENT_STATS_QUERY_WS IMPLEMENTATION.
 
     IF io_request->IS_TOTAL_NUMB_OF_REC_REQUESTED( ).
 
-      SELECT FROM zaevent_ws
+      SELECT FROM zwsaevent_ws
         FIELDS status
         GROUP BY status
         INTO TABLE @DATA(lt_groups).

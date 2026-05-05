@@ -1,8 +1,8 @@
-class ZBP_C_EVENT_WS definition
+class ZWSBP_C_EVENT_WS definition
   public
   abstract
   final
-  for behavior of ZC_EVENT_WS .
+  for behavior of ZWSC_EVENT_WS .
 
 public section.
 protected section.
@@ -11,5 +11,5 @@ ENDCLASS.
 
 
 
-CLASS ZBP_C_EVENT_WS IMPLEMENTATION.
+CLASS ZWSBP_C_EVENT_WS IMPLEMENTATION.
 ENDCLASS.

@@ -3,11 +3,11 @@
  <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
   <asx:values>
    <DCLS>
-    <DCLNAME>ZC_EVENT_WS</DCLNAME>
+    <DCLNAME>ZWSC_EVENT_WS</DCLNAME>
     <DCL_TYPE>ROLE</DCL_TYPE>
     <MASTERLANG>E</MASTERLANG>
     <LANGUAGE>E</LANGUAGE>
-    <SHORT_TEXT>Access Control for ZC_EVENT_WS</SHORT_TEXT>
+    <SHORT_TEXT>Access Control for ZWSC_EVENT_WS</SHORT_TEXT>
     <ABAP_LANGUAGE_VERSION>5</ABAP_LANGUAGE_VERSION>
    </DCLS>
   </asx:values>

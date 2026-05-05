@@ -2,8 +2,8 @@
 @AccessControl.authorizationCheck: #NOT_REQUIRED
 @Metadata.allowExtensions: true
 
-define view entity ZC_REG_WS
-  as projection on ZI_REG_WS
+define view entity ZWSC_REG_WS
+  as projection on ZWSI_REG_WS
 {
   key regist_uuid,
   
@@ -18,5 +18,5 @@ define view entity ZC_REG_WS
   local_last_changed_at,
   
   /* Relacja do rodzica (Consumption) */
-  _Event : redirected to parent ZC_EVENT_WS
+  _Event : redirected to parent ZWSC_EVENT_WS
 }

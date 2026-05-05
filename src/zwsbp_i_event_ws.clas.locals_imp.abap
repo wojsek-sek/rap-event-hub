@@ -15,7 +15,7 @@ CLASS lhc_registration IMPLEMENTATION.
 
   METHOD calculateOccupiedSeats.
 
-  READ ENTITIES OF ZI_EVENT_WS IN LOCAL MODE
+  READ ENTITIES OF ZWSI_EVENT_WS IN LOCAL MODE
     ENTITY Registration BY \_Event
     FROM CORRESPONDING #( keys )
     RESULT DATA(events).
@@ -27,13 +27,13 @@ CLASS lhc_registration IMPLEMENTATION.
 
     "Liczymy rejestracji dla tego konkretnego Eventu
     "Czytamy relację (Event -> Rejestracje)
-    READ ENTITIES OF ZI_EVENT_WS IN LOCAL MODE
+    READ ENTITIES OF ZWSI_EVENT_WS IN LOCAL MODE
       ENTITY ZiEventws BY \_Registrations
       FROM VALUE #( ( %tky = event-%tky ) )
       RESULT DATA(registrations).
 
     "Aktualizuj licznik w Evencie
-    MODIFY ENTITIES OF ZI_EVENT_WS IN LOCAL MODE
+    MODIFY ENTITIES OF ZWSI_EVENT_WS IN LOCAL MODE
       ENTITY ziEventws
       UPDATE
       FIELDS ( occupiedSeats )
@@ -46,7 +46,7 @@ CLASS lhc_registration IMPLEMENTATION.
 
   METHOD validateAvability.
 
-     READ ENTITIES OF ZI_EVENT_WS IN LOCAL MODE
+     READ ENTITIES OF ZWSI_EVENT_WS IN LOCAL MODE
         ENTITY Registration
         BY \_EVENT
         FIELDS ( OccupiedSeats MaxSeats )
@@ -77,7 +77,7 @@ CLASS lhc_registration IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD get_instance_features.
-    READ ENTITIES OF ZI_EVENT_WS IN LOCAL MODE
+    READ ENTITIES OF ZWSI_EVENT_WS IN LOCAL MODE
     ENTITY Registration BY \_Event
     FIELDS ( status )
     WITH CORRESPONDING #( keys )
@@ -89,7 +89,7 @@ CLASS lhc_registration IMPLEMENTATION.
 
         READ TABLE events INTO DATA(ls_event) WITH KEY %tky = ls_child_key-target-%tky.
 
-        IF sy-subrc = 0 AND ls_event-Status = zif_event_status_ws=>status-cancelled.
+        IF sy-subrc = 0 AND ls_event-Status = zwsif_event_status_ws=>status-cancelled.
             lv_edit = if_abap_behv=>fc-o-disabled.
         ENDIF.
 
@@ -127,7 +127,7 @@ CLASS LHC_ZI_EVENT_WS IMPLEMENTATION.
 
   METHOD validateDates.
 
-  READ ENTITIES OF ZI_Event_WS IN LOCAL MODE
+  READ ENTITIES OF ZWSI_Event_WS IN LOCAL MODE
        ENTITY ZiEventWs
        FIELDS ( startDate endDate )
        WITH CORRESPONDING #( keys )
@@ -137,7 +137,7 @@ CLASS LHC_ZI_EVENT_WS IMPLEMENTATION.
 
     IF event-endDate < event-startDate.
 
-      APPEND VALUE #( %tky = event-%tky ) TO failed-zieventws.
+      APPEND VALUE #( %tky = event-%tky ) TO failed-zwsieventws.
 
       "wiadomość do UI (REPORTED) - to wyświetla popup/tekst
       APPEND VALUE #( %tky               = event-%tky
@@ -148,7 +148,7 @@ CLASS LHC_ZI_EVENT_WS IMPLEMENTATION.
                                            )
                       %element-startDate = if_abap_behv=>mk-on " Podświetl pole na czerwono
                       %element-endDate   = if_abap_behv=>mk-on
-                    ) TO reported-zieventws.
+                    ) TO reported-zwsieventws.
 
     ENDIF.
   ENDLOOP.
@@ -157,7 +157,7 @@ CLASS LHC_ZI_EVENT_WS IMPLEMENTATION.
 
   METHOD initEventValues.
 
-        READ ENTITIES OF ZI_EVENT_WS IN LOCAL MODE
+        READ ENTITIES OF ZWSI_EVENT_WS IN LOCAL MODE
             ENTITY ZiEventWS
             FIELDS ( EventID OccupiedSeats MaxSeats )
             WITH CORRESPONDING #( keys )
@@ -165,16 +165,16 @@ CLASS LHC_ZI_EVENT_WS IMPLEMENTATION.
 
          IF events IS NOT INITIAL.
 
-            DATA lt_update TYPE TABLE FOR UPDATE ZI_EVENT_WS.
-            DATA: lv_max_event_id TYPE zaevent_ws-event_id,
+            DATA lt_update TYPE TABLE FOR UPDATE ZWSI_EVENT_WS.
+            DATA: lv_max_event_id TYPE zwsaevent_ws-event_id,
                   lv_next_id TYPE i.
 
-            READ ENTITIES OF ZI_EVENT_WS IN LOCAL MODE
+            READ ENTITIES OF ZWSI_EVENT_WS IN LOCAL MODE
                 ENTITY ZiEventWs BY \_Registrations
                 FROM CORRESPONDING #( events )
                 RESULT DATA(registrations).
 
-            MODIFY ENTITIES OF ZI_EVENT_WS IN LOCAL MODE
+            MODIFY ENTITIES OF ZWSI_EVENT_WS IN LOCAL MODE
                 ENTITY ZiEventWs
                 UPDATE
                 FIELDS ( OccupiedSeats MaxSeats Status )
@@ -185,7 +185,7 @@ CLASS LHC_ZI_EVENT_WS IMPLEMENTATION.
                         MaxSeats      = cond #( when event-MaxSeats is initial
                                                then 10
                                                else event-MaxSeats )
-                        Status        = zif_event_status_ws=>status-open
+                        Status        = zwsif_event_status_ws=>status-open
                      )
                     ).
 
@@ -214,13 +214,13 @@ CLASS LHC_ZI_EVENT_WS IMPLEMENTATION.
 
             " 3. Update the entities with the new EventID via EML (Entity Manipulation Language)
             IF lt_update IS NOT INITIAL.
-              MODIFY ENTITIES OF ZI_EVENT_WS IN LOCAL MODE
+              MODIFY ENTITIES OF ZWSI_EVENT_WS IN LOCAL MODE
                      ENTITY ZiEventWs
                      UPDATE FIELDS ( EventID ) WITH lt_update
                      REPORTED DATA(ls_reported).
 
-              LOOP AT ls_reported-zieventws INTO DATA(ls_msg).
-                APPEND CORRESPONDING #( ls_msg ) TO reported-zieventws.
+              LOOP AT ls_reported-zwsieventws INTO DATA(ls_msg).
+                APPEND CORRESPONDING #( ls_msg ) TO reported-zwsieventws.
               ENDLOOP.
             ENDIF.
          ENDIF.
@@ -229,7 +229,7 @@ CLASS LHC_ZI_EVENT_WS IMPLEMENTATION.
 
   METHOD get_instance_features.
 
-  READ ENTITIES OF ZI_EVENT_WS IN LOCAL MODE
+  READ ENTITIES OF ZWSI_EVENT_WS IN LOCAL MODE
       ENTITY ziEventws
       FIELDS ( status )
       WITH CORRESPONDING #( keys )
@@ -239,22 +239,22 @@ CLASS LHC_ZI_EVENT_WS IMPLEMENTATION.
       result = VALUE #( FOR event IN events (
                  %tky = event-%tky
                  %action-cancelEvent = COND #(
-                    WHEN event-status = zif_event_status_ws=>status-cancelled
+                    WHEN event-status = zwsif_event_status_ws=>status-cancelled
                     THEN if_abap_behv=>fc-o-disabled
                     ELSE if_abap_behv=>fc-o-enabled
                  )
                  %delete = COND #(
-                    WHEN event-status = zif_event_status_ws=>status-cancelled OR event-status IS INITIAL
+                    WHEN event-status = zwsif_event_status_ws=>status-cancelled OR event-status IS INITIAL
                     THEN if_abap_behv=>fc-o-enabled
                     ELSE if_abap_behv=>fc-o-disabled
                  )
                  %update = COND #(
-                    WHEN event-status = zif_event_status_ws=>status-cancelled
+                    WHEN event-status = zwsif_event_status_ws=>status-cancelled
                     THEN if_abap_behv=>fc-o-disabled
                     ELSE if_abap_behv=>fc-o-enabled
                  )
                  %assoc-_Registrations = COND #(
-                    WHEN event-status = zif_event_status_ws=>status-cancelled
+                    WHEN event-status = zwsif_event_status_ws=>status-cancelled
                     THEN if_abap_behv=>fc-o-disabled
                     ELSE if_abap_behv=>fc-o-enabled
                  )
@@ -264,7 +264,7 @@ CLASS LHC_ZI_EVENT_WS IMPLEMENTATION.
 
   METHOD cancelEvent.
 
-    READ ENTITIES OF ZI_EVENT_WS IN LOCAL MODE
+    READ ENTITIES OF ZWSI_EVENT_WS IN LOCAL MODE
     ENTITY ziEventws
     ALL FIELDS WITH CORRESPONDING #( keys )
     RESULT DATA(events).
@@ -274,13 +274,13 @@ CLASS LHC_ZI_EVENT_WS IMPLEMENTATION.
                          %param = event
                       ) ).
 
-    MODIFY ENTITIES OF ZI_EVENT_WS IN LOCAL MODE
+    MODIFY ENTITIES OF ZWSI_EVENT_WS IN LOCAL MODE
         ENTITY ziEventws
         UPDATE
         FIELDS ( status cancelreason )
         WITH VALUE #( FOR key IN keys (
                         %tky   = key-%tky
-                        status = zif_event_status_ws=>status-cancelled
+                        status = zwsif_event_status_ws=>status-cancelled
                         CancelReason = key-%param-reason
                      ) )
         FAILED failed
@@ -289,7 +289,7 @@ CLASS LHC_ZI_EVENT_WS IMPLEMENTATION.
     ENDMETHOD.
 
   METHOD GET_INSTANCE_AUTHORIZATIONS.
-    READ ENTITIES OF ZI_EVENT_WS IN LOCAL MODE
+    READ ENTITIES OF ZWSI_EVENT_WS IN LOCAL MODE
          ENTITY ziEventws
          FIELDS ( LOCALCreatedBy )
          WITH CORRESPONDING #( keys )

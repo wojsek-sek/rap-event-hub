@@ -3,7 +3,7 @@
 {
 "FROM":
 [
-"ZTFRAME_WS_TXT"
+"ZWSTFRAME_WS_TXT"
 ],
 "ASSOCIATED":
 [],

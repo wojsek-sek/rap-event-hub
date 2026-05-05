@@ -1,4 +1,4 @@
-CLASS zcl_fill_status_data DEFINITION
+CLASS zwscl_fill_status_data DEFINITION
   PUBLIC
   FINAL
   CREATE PUBLIC .
@@ -11,24 +11,24 @@ ENDCLASS.
 
 
 
-CLASS ZCL_FILL_STATUS_DATA IMPLEMENTATION.
+CLASS ZWSCL_FILL_STATUS_DATA IMPLEMENTATION.
 
 
   METHOD if_oo_adt_classrun~main.
 
-    DELETE FROM zstatus_ws.
-    DELETE FROM zstatus_txt_ws.
+    DELETE FROM zwsstatus_ws.
+    DELETE FROM zwsstatus_txt_ws.
 
-    DATA: lt_statuses TYPE TABLE OF zstatus_ws.
+    DATA: lt_statuses TYPE TABLE OF zwsstatus_ws.
     lt_statuses = VALUE #(
       ( status_id = 'O' )
       ( status_id = 'X' )
       ( status_id = 'F' )
       ( status_id = 'D' )
     ).
-    INSERT zstatus_ws FROM TABLE @lt_statuses.
+    INSERT zwsstatus_ws FROM TABLE @lt_statuses.
 
-    DATA: lt_texts TYPE TABLE OF zstatus_txt_ws.
+    DATA: lt_texts TYPE TABLE OF zwsstatus_txt_ws.
     lt_texts = VALUE #(
       ( status_id = 'O' language = 'L' description = 'Otwarty' )
       ( status_id = 'X' language = 'L' description = 'Anulowany' )
@@ -39,7 +39,7 @@ CLASS ZCL_FILL_STATUS_DATA IMPLEMENTATION.
       ( status_id = 'F' language = 'E' description = 'Finished' )
       ( status_id = 'D' language = 'E' description = 'Declined' )
     ).
-    INSERT zstatus_txt_ws FROM TABLE @lt_texts.
+    INSERT zwsstatus_txt_ws FROM TABLE @lt_texts.
 
     out->write( 'Dane konfiguracyjne zostały załadowane poprawnie.' ).
 

@@ -3,7 +3,7 @@
  <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
   <asx:values>
    <VSEOCLASS>
-    <CLSNAME>ZCL_FILL_STATUS_DATA</CLSNAME>
+    <CLSNAME>ZWSCL_FILL_STATUS_DATA</CLSNAME>
     <LANGU>E</LANGU>
     <DESCRIPT>Helper to fill data for status</DESCRIPT>
     <STATE>1</STATE>

@@ -3,7 +3,7 @@
  <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
   <asx:values>
    <VSEOCLASS>
-    <CLSNAME>ZCL_EVENT_STATS_QUERY_WS</CLSNAME>
+    <CLSNAME>ZWSCL_EVENT_STATS_QUERY_WS</CLSNAME>
     <LANGU>E</LANGU>
     <DESCRIPT>Class for Event Stats Data</DESCRIPT>
     <STATE>1</STATE>

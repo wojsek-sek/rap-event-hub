@@ -1,10 +1,10 @@
 @AccessControl.authorizationCheck: #CHECK
 @Metadata.allowExtensions: true
 @EndUserText.label: 'Events'
-define root view entity ZI_EVENT_WS
-  as select from zaevent_ws 
-  composition [0..*] of ZI_REG_WS as _Registrations
-  association [0..1] to ZI_STAUTS_VH_WS as _StatusVH on $projection.Status = _StatusVH.Status
+define root view entity ZWSI_EVENT_WS
+  as select from zwsaevent_ws 
+  composition [0..*] of ZWSI_REG_WS as _Registrations
+  association [0..1] to ZWSI_STAUTS_VH_WS as _StatusVH on $projection.Status = _StatusVH.Status
 {
   key event_uuid as EventUUID,
   event_id as EventID,
@@ -42,7 +42,7 @@ define root view entity ZI_EVENT_WS
 
   /* --- Virtual Element --- */
   @EndUserText.label: 'Dni do startu'
-  @ObjectModel.virtualElementCalculatedBy: 'ABAP:ZCL_EVENT_DAYS_CALS'
+  @ObjectModel.virtualElementCalculatedBy: 'ABAP:ZWSCL_EVENT_DAYS_CALS'
   cast( '' as abap.char(132) ) as DaysToStart,
   /* ------------------------- */
       

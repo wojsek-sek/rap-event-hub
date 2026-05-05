@@ -2,7 +2,7 @@
 @AccessControl.authorizationCheck: #NOT_REQUIRED
 @EndUserText.label: 'Venus Value Help CDS View for Event Hub'
 @Search.searchable: true
-define view entity ZI_VENUE_VH_WS as select from zvenue_ws
+define view entity ZWSI_VENUE_VH_WS as select from zwsvenue_ws
 {
     @UI.hidden: true
     key venue_id as VenueId,

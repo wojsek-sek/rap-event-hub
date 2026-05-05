@@ -4,13 +4,13 @@
   label: 'Event Details'
 }
 @ObjectModel: {
-  sapObjectNodeType.name: 'ZEVENT_HUB'
+  sapObjectNodeType.name: 'ZWSEVENT_HUB'
 }
 @AccessControl.authorizationCheck: #CHECK
-define root view entity ZC_EVENT_WS
+define root view entity ZWSC_EVENT_WS
   provider contract transactional_query
-  as projection on ZI_EVENT_WS
-  association [1..1] to ZI_EVENT_WS as _BaseEntity on $projection.EventUUID = _BaseEntity.EventUUID
+  as projection on ZWSI_EVENT_WS
+  association [1..1] to ZWSI_EVENT_WS as _BaseEntity on $projection.EventUUID = _BaseEntity.EventUUID
 {
   key EventUUID,
   EventID,
@@ -23,7 +23,7 @@ define root view entity ZC_EVENT_WS
   Title,
   @Consumption.valueHelpDefinition: [ { 
     entity: { 
-        name:    'ZI_VENUE_VH_WS',
+        name:    'ZWSI_VENUE_VH_WS',
         element: 'VenueName'
     },
     
@@ -34,7 +34,7 @@ define root view entity ZC_EVENT_WS
   EndDate,
   @Consumption.valueHelpDefinition: [ { 
     entity: { 
-        name:    'ZI_Stauts_VH_WS',
+        name:    'ZWSI_Stauts_VH_WS',
         element: 'Status'
     }, distinctValues: true
   } ]
@@ -74,5 +74,5 @@ define root view entity ZC_EVENT_WS
   
   
   /* Przekierowanie relacji do wersji "C_" dziecka */
-  _Registrations : redirected to composition child ZC_REG_WS
+  _Registrations : redirected to composition child ZWSC_REG_WS
 }

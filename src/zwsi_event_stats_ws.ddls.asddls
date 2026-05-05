@@ -1,6 +1,6 @@
 @EndUserText.label: 'Statystyki Eventów'
-@ObjectModel.query.implementedBy: 'ABAP:ZCL_EVENT_STATS_QUERY_WS'
-define custom entity ZI_EVENT_STATS_WS
+@ObjectModel.query.implementedBy: 'ABAP:ZWSCL_EVENT_STATS_QUERY_WS'
+define custom entity ZWSI_EVENT_STATS_WS
 {
   key Status    : abap.char(1);
       

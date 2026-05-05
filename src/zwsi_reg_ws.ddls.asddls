@@ -2,9 +2,9 @@
 @AccessControl.authorizationCheck: #NOT_REQUIRED
 @EndUserText.label: 'View Entity for Registration'
 @Metadata.ignorePropagatedAnnotations: true
-define view entity ZI_REG_WS
-  as select from zareg_ws
-  association to parent ZI_EVENT_WS as _Event on $projection.event_uuid = _Event.EventUUID
+define view entity ZWSI_REG_WS
+  as select from zwsareg_ws
+  association to parent ZWSI_EVENT_WS as _Event on $projection.event_uuid = _Event.EventUUID
 {
   key regist_uuid,
   event_uuid,

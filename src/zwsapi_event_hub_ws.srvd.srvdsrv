@@ -1,7 +1,7 @@
 @EndUserText.label: 'Api for Event Hub'
-define service ZAPI_EVENT_HUB_WS {
-  expose ZI_EVENT_WS       as Event;
-  expose ZI_REG_WS         as Registrations;
-  expose ZI_VENUE_VH_WS    as Venues_VH;
-  expose ZI_EVENT_STATS_WS as EventStatistics;
+define service ZWSAPI_EVENT_HUB_WS {
+  expose ZWSI_EVENT_WS       as Event;
+  expose ZWSI_REG_WS         as Registrations;
+  expose ZWSI_VENUE_VH_WS    as Venues_VH;
+  expose ZWSI_EVENT_STATS_WS as EventStatistics;
 }

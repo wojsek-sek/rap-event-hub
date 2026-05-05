@@ -1,11 +1,11 @@
 @EndUserText.label: 'Anulowanie Wydarzenia'
-define abstract entity ZI_EventCancel_Popup_WS
+define abstract entity ZWSI_EventCancel_Popup_WS
 {
   @EndUserText.label: 'Powód Anulowania'
   @UI.defaultValue: '01'
   @Consumption.valueHelpDefinition: [ { 
     entity: { 
-        name:    'ZI_Cancel_reason_VH_WS',
+        name:    'ZWSI_Cancel_reason_VH_WS',
         element: 'CancelReason'
     }
   } ]

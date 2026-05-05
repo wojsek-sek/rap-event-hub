@@ -1,4 +1,4 @@
-CLASS zcl_generate_data_ws DEFINITION
+CLASS zwscl_generate_data_ws DEFINITION
   PUBLIC
   FINAL
   CREATE PUBLIC .
@@ -12,20 +12,20 @@ ENDCLASS.
 
 
 
-CLASS ZCL_GENERATE_DATA_WS IMPLEMENTATION.
+CLASS ZWSCL_GENERATE_DATA_WS IMPLEMENTATION.
 
 
   METHOD if_oo_adt_classrun~main.
 
-    DELETE FROM zaevent_ws.
-    DELETE FROM zareg_ws.
-    DELETE FROM zevent_ws_d.
-    DELETE FROM zareg_ws_d.
-    DELETE FROM zvenue_ws.
+    DELETE FROM zwsaevent_ws.
+    DELETE FROM zwsareg_ws.
+    DELETE FROM zwsevent_ws_d.
+    DELETE FROM zwsareg_ws_d.
+    DELETE FROM zwsvenue_ws.
 
-    DATA: it_events TYPE TABLE OF zaevent_ws.
-    DATA: it_registrations TYPE TABLE OF zareg_ws.
-    DATA: it_venues TYPE TABLE OF zvenue_ws.
+    DATA: it_events TYPE TABLE OF zwsaevent_ws.
+    DATA: it_registrations TYPE TABLE OF zwsareg_ws.
+    DATA: it_venues TYPE TABLE OF zwsvenue_ws.
 
     TRY.
         DATA(lv_event_uuid) = cl_system_uuid=>create_uuid_x16_static( ).
@@ -92,9 +92,9 @@ CLASS ZCL_GENERATE_DATA_WS IMPLEMENTATION.
         "handle exception
     ENDTRY.
 
-    INSERT zaevent_ws FROM TABLE @it_events.
-    INSERT zareg_ws FROM TABLE @it_registrations.
-    INSERT zvenue_ws FROM TABLE @it_venues.
+    INSERT zwsaevent_ws FROM TABLE @it_events.
+    INSERT zwsareg_ws FROM TABLE @it_registrations.
+    INSERT zwsvenue_ws FROM TABLE @it_venues.
 
     out->write( |Dane wygenerowane!| ).
 

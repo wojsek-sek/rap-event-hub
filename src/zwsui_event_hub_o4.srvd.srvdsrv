@@ -1,14 +1,14 @@
 @EndUserText: {
-  label: 'Service Definition for ZC_EVENT_WS'
+  label: 'Service Definition for ZWSC_EVENT_WS'
 }
 @ObjectModel: {
   leadingEntity: {
-    name: 'ZC_EVENT_WS'
+    name: 'ZWSC_EVENT_WS'
   }
 }
-define service ZUI_EVENT_HUB_O4
+define service ZWSUI_EVENT_HUB_O4
   provider contracts odata_v4_ui {
-  expose ZC_EVENT_WS;
-  expose ZC_REG_WS      as Registration;
-  expose ZI_VENUE_VH_WS as Venue;
+  expose ZWSC_EVENT_WS;
+  expose ZWSC_REG_WS      as Registration;
+  expose ZWSI_VENUE_VH_WS as Venue;
 }

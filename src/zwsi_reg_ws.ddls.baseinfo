@@ -3,11 +3,11 @@
 {
 "FROM":
 [
-"ZAREG_WS"
+"ZWSAREG_WS"
 ],
 "ASSOCIATED":
 [
-"ZI_EVENT_WS"
+"ZWSI_EVENT_WS"
 ],
 "BASE":
 [],

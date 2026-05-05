@@ -1,6 +1,6 @@
-@EndUserText.label: 'ZC_EVENT_WS'
+@EndUserText.label: 'ZWSC_EVENT_WS'
 @MappingRole: true
-define role ZC_EVENT_WS {
-  grant select on ZC_EVENT_WS
-  where INHERITING CONDITIONS FROM ENTITY ZI_EVENT_WS REPLACING { ROOT WITH _BaseEntity };
+define role ZWSC_EVENT_WS {
+  grant select on ZWSC_EVENT_WS
+  where INHERITING CONDITIONS FROM ENTITY ZWSI_EVENT_WS REPLACING { ROOT WITH _BaseEntity };
 }
