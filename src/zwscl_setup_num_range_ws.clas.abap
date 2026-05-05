@@ -17,7 +17,7 @@ CLASS ZWSCL_SETUP_NUM_RANGE_WS IMPLEMENTATION.
 
   METHOD if_oo_adt_classrun~main.
 
-    DATA: lv_object TYPE c LENGTH 10 VALUE 'ZWSNR_EID_WS'.
+    DATA: lv_object TYPE c LENGTH 10 VALUE 'ZWS_EID'.
 
     TRY.
 

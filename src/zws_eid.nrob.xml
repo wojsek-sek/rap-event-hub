@@ -3,7 +3,7 @@
  <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
   <asx:values>
    <ATTRIBUTES>
-    <OBJECT>ZWSNR_EID_WS</OBJECT>
+    <OBJECT>ZWS_EID</OBJECT>
     <DOMLEN>ZWSDO_EVENT_ID_WS</DOMLEN>
     <PERCENTAGE>10.0</PERCENTAGE>
     <BUFFER>X</BUFFER>
@@ -11,7 +11,7 @@
    </ATTRIBUTES>
    <TEXT>
     <LANGU>E</LANGU>
-    <OBJECT>ZWSNR_EID_WS</OBJECT>
+    <OBJECT>ZWS_EID</OBJECT>
     <TXT>Event Id Numbering</TXT>
     <TXTSHORT>Event Id Numbering</TXTSHORT>
    </TEXT>
